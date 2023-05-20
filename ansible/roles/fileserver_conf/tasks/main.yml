@@ -1,0 +1,24 @@
+- name: Install File-Services
+  ansible.windows.win_feature:
+    name: File-Services
+    state: present
+    IncludeManagementTools: yes
+    register: file-services
+
+- name: Create Directory
+  ansible.windows.win_file:
+    path: C:/Project/PRO03/Afdelingen/Administratie
+    state: directory
+    recurse: yes      
+
+- name: Create Directory
+  ansible.windows.win_file:
+    path: C:/Project/PRO03/Afdelingen/IT
+    state: directory
+    recurse: yes      
+
+- name: Create Directory
+  ansible.windows.win_file:
+    path: C:/Project/PRO03/Afdelingen/Financien
+    state: directory
+    recurse: yes      

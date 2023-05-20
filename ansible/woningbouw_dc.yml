@@ -1,0 +1,9 @@
+- name: Configure dc
+  hosts: dc1
+  roles:
+    - domain_setup_woningbouw
+
+- name: configure dc
+  hosts: dc1
+  roles: 
+    - domain_conf

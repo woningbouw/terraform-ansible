@@ -1,0 +1,40 @@
+- name: Create woningbouw OU
+  win_dsc:
+    resource_name: ADOrganizationalUnit
+    name: "{{ item }}"
+    path: "DC=woningbouw,DC=local"
+  loop:
+    - WoningUsers
+    - WoningComputers
+    - WoningServers
+    - WoningGroups
+
+
+- name: Add windows groups
+  win_domain_group:
+    name: "{{ item }}"
+    scope: global
+    path: "OU=WoningGroups,DC=woningbouw,DC=local"
+  loop:
+    - Super_Admins
+    - Locatie_Users
+      
+
+# create Domain controller admin
+- name: Add Windows domain admin
+  win_domain_user:
+    name: "admin.woningbouw"
+    upn: "admin.woningbouw@woningbouw.local"
+    state: present
+    enabled: yes
+    account_locked: no
+    groups:
+        - Domain Admins
+        - Super_Admins
+    password: "Pinewood1234!"
+    update_password: on_create
+    password_expired: false
+    firstname: woningbouw
+    surname: user
+    company: Pinewood
+    email: "admin.woningbouw@woningbouw.local"

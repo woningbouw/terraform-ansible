@@ -1,0 +1,12 @@
+[domain_controllers]
+dc1 ansible_host=192.168.9.2
+dc2 ansible_host=192.168.9.3
+
+[monitoring_servers]
+192.168.9.5
+
+[dc_mainfontys]
+10.0.0.2
+
+[file_servers]
+192.168.9.4

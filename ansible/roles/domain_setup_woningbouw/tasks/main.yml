@@ -1,0 +1,45 @@
+
+  - name: Set dns server for setting up dc
+    ansible.windows.win_dns_client:
+      adapter_names: "*"
+      ipv4_addresses:
+        - "8.8.8.8"
+        - "8.8.4.4"
+
+# installs active directory on the server
+  - name: Install Active Directory Domain Services
+    ansible.windows.win_feature:
+      name: AD-Domain-Services
+      include_management_tools: yes
+      include_sub_features: yes
+      state: present
+    register: adds
+# Makes the woningbouw.local  domain
+  - name: Create Domain
+    ansible.windows.win_domain:
+      dns_domain_name: woningbouw.local
+      safe_mode_password: P@ssword01!!!
+    register: domain
+# Reboot 
+  - name: Reboot
+    ansible.windows.win_reboot:
+      msg: "Installing AD. Rebooting..."
+      pre_reboot_delay: 15
+    when: domain.changed
+
+
+  
+  - name: Install latest nuget (required for DSC Resource Kit)
+    win_shell: install-packageprovider -name nuget -force
+
+  - name: Install xActiveDirectory PS Module
+    win_psmodule:
+      name: ActiveDirectoryDSC
+      state: present
+      accept_license: true
+      allow_clobber: true
+    register: result
+    retries: 3
+    delay: 3
+    until: result is not failed
+

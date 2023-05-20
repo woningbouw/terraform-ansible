@@ -1,0 +1,5 @@
+- name: configure server with zabbix
+  hosts: monitoring_servers
+  become: true
+  roles :
+    - zabbix_setup

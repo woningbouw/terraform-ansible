@@ -1,0 +1,21 @@
+
+
+
+
+- name: Create Zabbix User
+  zabbix_user:
+    server_url: http://192.168.9.200/zabbix # Replace with your Zabbix server URL
+    #api_url: http://localhost/api_jsonrpc.php
+    login_user: Admin
+    login_password: zabbix
+    usrgrps:
+      - Guests
+    username: pieter
+    passwd: jan1234!
+    type: Zabbix super admin
+    state: present
+  register: zabbix_user_result
+
+- name: Display Result
+  debug:
+    var: zabbix_user_result

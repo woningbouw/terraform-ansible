@@ -1,0 +1,4 @@
+- name: Configure zabbix agent windows
+  hosts: wds_servers
+  roles:
+    - zabbix_agent
