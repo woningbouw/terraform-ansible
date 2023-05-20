@@ -32,8 +32,8 @@ resource "vsphere_virtual_machine" "fs1" {
       windows_options {
         computer_name = "woningbouw-fs1"
         join_domain = "Woningbouw.local"
-        domain_admin_user = data.vault_generic_secret.netlablogin.data["winadminpassword"]
-        domain_admin_password = "yLP4puAq"
+        domain_admin_user = "Administrator"
+        domain_admin_password = data.vault_generic_secret.netlablogin.data["winadminpassword"]
         
       }
       network_interface {
