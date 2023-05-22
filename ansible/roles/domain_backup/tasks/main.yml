@@ -1,0 +1,38 @@
+- name: Install Active Directory Domain Services role
+  win_feature:
+    name: AD-Domain-Services
+    state: present
+
+- name: Promote server to Domain Controller
+  win_command: >
+    dcpromo /unattend
+    /replicaOrNewDomain:replica
+    /ReplicaDomainDNSName:woningbouw.local
+    /ReplicaDomainName:woningbouw.local
+    /ReplicaOrNewDomain:Replica
+    /ConfirmGC:yes
+    /SafeModeAdminPassword:Password123
+    /DatabasePath:C:\Windows\NTDS
+    /LogPath:C:\Windows\NTDS
+    /SYSVOLPath:C:\Windows\SYSVOL
+    /InstallDNS:yes
+    /UseExistingDC:yes
+    /AdminPassword:Password123
+    /RebootOnCompletion:yes
+
+- name: Wait for server to restart
+  win_reboot:
+    wait_timeout: 600
+    connect_timeout: 60
+    reboot_timeout: 600
+
+- name: Configure DNS settings
+  win_dns_client:
+    adapter_names: "*"
+    ipv4_addresses:
+      - "192.168.9.2"
+    register_connection_suffix: yes
+    connection_suffix: woningbouw.local
+    dns_servers:
+      - "192.168.9.2"
+      - "192.168.9.3"
