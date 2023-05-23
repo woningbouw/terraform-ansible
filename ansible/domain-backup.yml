@@ -1,0 +1,4 @@
+- name: configure dc
+  hosts: dc2
+  roles: 
+    - domain_backup

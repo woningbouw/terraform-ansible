@@ -31,14 +31,11 @@ resource "vsphere_virtual_machine" "dc2" {
     customize {
       windows_options {
         computer_name = "woningbouw-dc2"
-<<<<<<< Updated upstream
-        admin_password = data.vault_generic_secret.netlablogin.data["winadminpassword"]
-=======
         join_domain = "Woningbouw.local"
         domain_admin_user = "Administrator"
         domain_admin_password = data.vault_generic_secret.netlablogin.data["winadminpassword"]
         depends_on = [vsphere_virtual_machine.dc1]
->>>>>>> Stashed changes
+
         
       }
       network_interface {
@@ -62,5 +59,9 @@ resource "vsphere_virtual_machine" "dc2" {
         host = "192.168.9.3"
       }
     
+  }
+   provisioner "local-exec" {
+    working_dir = "ansible"
+    command = "sleep 120; ansible-playbook domain-backup.yml"
   }
 }

@@ -2,6 +2,7 @@
   hosts: dc1
   roles:
     - domain_setup_woningbouw
+    - domain_conf
 
 - name: configure dc
   hosts: dc1
