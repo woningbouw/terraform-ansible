@@ -1,0 +1,20 @@
+# installs active directory on the server
+  - name: Install Active Directory Domain Services
+    ansible.windows.win_feature:
+      name: AD-Domain-Services
+      include_management_tools: yes
+      include_sub_features: yes
+      state: present
+    register: adds
+# Makes the woningbouw.local  domain
+  - name: Create Domain
+    ansible.windows.win_domain:
+      dns_domain_name: woningbouw.local
+      safe_mode_password: P@ssword01!!!
+    register: domain
+# Reboot 
+  - name: Reboot
+    ansible.windows.win_reboot:
+      msg: "Installing AD. Rebooting..."
+      pre_reboot_delay: 15
+    when: domain.changed

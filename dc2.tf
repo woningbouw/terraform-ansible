@@ -31,7 +31,14 @@ resource "vsphere_virtual_machine" "dc2" {
     customize {
       windows_options {
         computer_name = "woningbouw-dc2"
+<<<<<<< Updated upstream
         admin_password = data.vault_generic_secret.netlablogin.data["winadminpassword"]
+=======
+        join_domain = "Woningbouw.local"
+        domain_admin_user = "Administrator"
+        domain_admin_password = data.vault_generic_secret.netlablogin.data["winadminpassword"]
+        depends_on = [vsphere_virtual_machine.dc1]
+>>>>>>> Stashed changes
         
       }
       network_interface {

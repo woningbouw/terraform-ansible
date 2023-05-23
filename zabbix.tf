@@ -1,3 +1,4 @@
+# variables for the template
 locals {
   templatevars = {
     name         = "zabbix-server"  ,
@@ -9,6 +10,7 @@ locals {
     ssh_username = var.ssh_username
   }
 }
+# creates the Vm rescourse speciefied parameters of the vm
 resource "vsphere_virtual_machine" "zabbix" {
   name = " woningbouw-monitoring"
   resource_pool_id = data.vsphere_compute_cluster.cluster.resource_pool_id 

@@ -7,7 +7,7 @@ resource "vsphere_virtual_machine" "fs1" {
   memory = 1024
   firmware = data.vsphere_virtual_machine.windowsserver22.firmware
   guest_id = data.vsphere_virtual_machine.windowsserver22.guest_id
-  depends_on = [vsphere_virtual_machine.dc1]
+  depends_on = [vsphere_virtual_machine.dc2]
 
   # The network interface the vm get connected to
   network_interface {
