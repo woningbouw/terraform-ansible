@@ -1,10 +1,10 @@
 
-  - name: Set dns server for setting up dc
-    ansible.windows.win_dns_client:
-      adapter_names: "*"
-      ipv4_addresses:
-        - "8.8.8.8"
-        - "8.8.4.4"
+  # - name: Set dns server for setting up dc
+  #   ansible.windows.win_dns_client:
+  #     adapter_names: "*"
+  #     ipv4_addresses:
+  #       - "8.8.8.8"
+  #       - "8.8.4.4"
 
 # installs active directory on the server
   - name: Install Active Directory Domain Services
@@ -39,7 +39,7 @@
       accept_license: true
       allow_clobber: true
     register: result
-    retries: 3
+    retries: 10
     delay: 3
     until: result is not failed
 

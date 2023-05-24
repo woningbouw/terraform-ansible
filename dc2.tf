@@ -7,6 +7,7 @@ resource "vsphere_virtual_machine" "dc2" {
   memory = 1024
   firmware = data.vsphere_virtual_machine.windowsserver22.firmware
   guest_id = data.vsphere_virtual_machine.windowsserver22.guest_id
+  depends_on = [vsphere_virtual_machine.dc1]
   
 
   # The network interface the vm get connected to
@@ -16,8 +17,8 @@ resource "vsphere_virtual_machine" "dc2" {
     
   }
 
-  wait_for_guest_net_timeout = 1
-  wait_for_guest_ip_timeout = 1
+  # wait_for_guest_net_timeout = 4
+  # wait_for_guest_ip_timeout = 4
   # atributes for customizing the disk of the vm.
   # they get the same atributes as the machine they get cloned from
   disk {
@@ -29,12 +30,13 @@ resource "vsphere_virtual_machine" "dc2" {
   clone {
     template_uuid = data.vsphere_virtual_machine.windowsserver22.id
     customize {
+      # timeout = 0
       windows_options {
         computer_name = "woningbouw-dc2"
         join_domain = "Woningbouw.local"
         domain_admin_user = "Administrator"
         domain_admin_password = data.vault_generic_secret.netlablogin.data["winadminpassword"]
-        depends_on = [vsphere_virtual_machine.dc1]
+
 
         
       }

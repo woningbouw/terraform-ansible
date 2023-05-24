@@ -16,8 +16,8 @@ resource "vsphere_virtual_machine" "fs1" {
     
   }
 
-  wait_for_guest_net_timeout = 1
-  wait_for_guest_ip_timeout = 1
+  wait_for_guest_net_timeout = 4
+  wait_for_guest_ip_timeout = 4
   # atributes for customizing the disk of the vm.
   # they get the same atributes as the machine they get cloned from
   disk {
@@ -29,6 +29,7 @@ resource "vsphere_virtual_machine" "fs1" {
   clone {
     template_uuid = data.vsphere_virtual_machine.windowsserver22.id
     customize {
+      #timeout = 0
       windows_options {
         computer_name = "woningbouw-fs1"
         join_domain = "Woningbouw.local"

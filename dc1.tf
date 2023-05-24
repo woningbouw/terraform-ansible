@@ -29,7 +29,7 @@ resource "vsphere_virtual_machine" "dc1" {
   clone {
     template_uuid = data.vsphere_virtual_machine.windowsserver22.id
     customize {
-      windows_options {
+        windows_options {
         computer_name = "woningbouw-dc1"
         admin_password = data.vault_generic_secret.netlablogin.data["winadminpassword"]
         
