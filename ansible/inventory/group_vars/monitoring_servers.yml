@@ -2,12 +2,5 @@ ansible_user: ansible
 ansible_connection: ssh
 ansible_port: 22  
 ansible_ssh_private_key_file: ~/home/.ssh/id_rsa
-zabbix_db_name: zabbix
-zabbix_db_user: zabbix
-zabbix_db_pass: zabbixpassword
-zabbix_version: 5.4
-zabbix_mysql_password: zabbix
-ansible_network_os: community.zabbix.zabbix
-ansible_httpapi_port: 80
-ansible_httpapi_use_ssl: false
-ansible_httpapi_validate_certs: false
+zabbixpasswordsql:
+rootpassword:
