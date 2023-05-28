@@ -1,5 +1,22 @@
+# creates ssh-keypair for ansible
+resource "tls_private_key" "pk" {
+  algorithm = "RSA"
+  rsa_bits  = 4096
+}
+#stores ssh-privateket localy in the .shh map
+resource "local_sensitive_file" "pem_file" {
+  filename= pathexpand("~/.ssh/ansible")
+  file_permission = "600"
+  directory_permission = "700"
+  content              = tls_private_key.pk.private_key_openssh
+}
+
+
+
 # variables for the template
 locals {
+  shhbeforetrim = trimspace(tls_private_key.pk.public_key_openssh)
+  sstrimmed     = trim(local.shhbeforetrim, "ssh-rsa ")
   templatevars = {
     name         = "zabbix-server"  ,
     ipv4_address = "192.168.9.5",
@@ -10,18 +27,6 @@ locals {
     ssh_username = var.ssh_username
   }
 }
-
-resource "tls_private_key" "pk" {
-  algorithm = "RSA"
-  rsa_bits  = 4096
-}
-resource "local_sensitive_file" "pem_file" {
-  filename = pathexpand("~/home/.ssh/ansible.pem")
-  file_permission = "600"
-  directory_permission = "700"
-  content = tls_private_key.pk.private_key_pem
-}
-
 
 
 
@@ -70,6 +75,10 @@ resource "vsphere_virtual_machine" "zabbix" {
       clone[0].customize[0].dns_server_list,
       clone[0].customize[0].network_interface[0]
     ]
+  }
+  provisioner "local-exec" {
+    working_dir = "ansible"
+    command     = "sleep 120; ansible-playbook zabbix-setup.yml --extra-vars  zabbixpasswordsql=${data.vault_generic_secret.netlablogin.data["zabbixsql"]} rootpassword=${data.vault_generic_secret.netlablogin.data["rootsql"]} "
   }
 
 }

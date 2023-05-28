@@ -60,7 +60,7 @@ resource "vsphere_virtual_machine" "fs1" {
   }
   provisioner "local-exec" {
     working_dir = "ansible"
-    command = "sleep 120; ansible-playbook fileserver-setup.yml"
+    command = "sleep 120; ansible-playbook fileserver-setup.yml --extra-vars ansible_password=${data.vault_generic_secret.netlablogin.data["winrmansible"]}"
     
   }
 }

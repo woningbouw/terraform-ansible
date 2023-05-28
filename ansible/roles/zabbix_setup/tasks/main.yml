@@ -1,11 +1,11 @@
 - name: "Download zabbix with wget"
-  command: "wget https://repo.zabbix.com/zabbix/6.0/ubuntu/pool/main/z/zabbix-release/zabbix-release_6.0-4+ubuntu20.04_all.deb -O /home/ubu_ad/Downloads/zabbix.deb"
+  command: "wget https://repo.zabbix.com/zabbix/6.0/ubuntu/pool/main/z/zabbix-release/zabbix-release_6.0-4+ubuntu20.04_all.deb -O /tmp/zabbix.deb"
 
 - name: "Change execution"
-  command: "chmod +x /home/ubu_ad/Downloads/zabbix.deb"
+  command: "chmod +x /tmp/zabbix.deb"
 
 - name: "install zabbix with dpkg"
-  command: "dpkg -i /home/ubu_ad/Downloads/zabbix.deb"
+  command: "dpkg -i /tmp/zabbix.deb"
 
 - name: "apt update"
   command: "apt update"

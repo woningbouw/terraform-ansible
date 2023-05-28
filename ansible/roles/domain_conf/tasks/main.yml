@@ -31,7 +31,7 @@
     groups:
         - Domain Admins
         - Super_Admins
-    password: "Pinewood1234!"
+    password: "{{domain_adminpass}}"
     update_password: on_create
     password_expired: false
     firstname: woningbouw

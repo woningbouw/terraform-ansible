@@ -64,6 +64,6 @@ resource "vsphere_virtual_machine" "dc2" {
   }
    provisioner "local-exec" {
     working_dir = "ansible"
-    command = "sleep 120; ansible-playbook domain-backup.yml"
+    command = "sleep 120; ansible-playbook domain-backup.yml --extra-vars ansible_password=${data.vault_generic_secret.netlablogin.data["winrmansible"]} winadminpass=${data.vault_generic_secret.netlablogin.data["winadminpassword"]} domain_safe_password=${data.vault_generic_secret.netlablogin.data["dcsafepassword"]}"
   }
 }

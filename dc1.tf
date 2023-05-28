@@ -29,7 +29,7 @@ resource "vsphere_virtual_machine" "dc1" {
   clone {
     template_uuid = data.vsphere_virtual_machine.windowsserver22.id
     customize {
-        windows_options {
+      windows_options {
         computer_name = "woningbouw-dc1"
         admin_password = data.vault_generic_secret.netlablogin.data["winadminpassword"]
         
@@ -56,13 +56,10 @@ resource "vsphere_virtual_machine" "dc1" {
       }
     
   }
+  # start ansible with the playbook to setup the domain controller.
   provisioner "local-exec" {
     working_dir = "ansible"
-    command = "sleep 120; ansible-playbook woningbouw_dc.yml "
+    command = "sleep 120; ansible-playbook woningbouw_dc.yml --extra-vars ansible_password=${data.vault_generic_secret.netlablogin.data["winrmansible"]} domain_safe_password=${data.vault_generic_secret.netlablogin.data["dcsafepassword"]} domain_adminpass=${data.vault_generic_secret.netlablogin.data["dcadminpassword"]} "
   }
 
-  # provisioner "local-exec" {
-  #   working_dir = "ansible"
-  #   command = "sleep 120; ansible-playbook woningbouw_dc.yml --extra vars= '${var.vault_token}'"
-  # }
 }

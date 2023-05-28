@@ -18,7 +18,7 @@
   - name: Create Domain
     ansible.windows.win_domain:
       dns_domain_name: woningbouw.local
-      safe_mode_password: P@ssword01!!!
+      safe_mode_password: "{{domain_safe_password}}"
     register: domain
 # Reboot 
   - name: Reboot

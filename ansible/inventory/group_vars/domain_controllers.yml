@@ -1,7 +1,9 @@
 ansible_user: ansible
-ansible_password: SuperS3cret
+ansible_password: value
 ansible_port: 5985
 ansible_connection: winrm
 ansible_winrm_server_cert_validation: ignore
 domain_name: woningbouw.local
-domain_safe_password: Password1234!
+domain_safe_password: value
+domain_adminpass: value
+winadminpass: value
