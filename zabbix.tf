@@ -10,6 +10,22 @@ locals {
     ssh_username = var.ssh_username
   }
 }
+
+resource "tls_private_key" "pk" {
+  algorithm = "RSA"
+  rsa_bits  = 4096
+}
+resource "local_sensitive_file" "pem_file" {
+  filename = pathexpand("~/home/.ssh/ansible.pem")
+  file_permission = "600"
+  directory_permission = "700"
+  content = tls_private_key.pk.private_key_pem
+}
+
+
+
+
+
 # creates the Vm rescourse speciefied parameters of the vm
 resource "vsphere_virtual_machine" "zabbix" {
   name = " woningbouw-monitoring"
@@ -55,4 +71,5 @@ resource "vsphere_virtual_machine" "zabbix" {
       clone[0].customize[0].network_interface[0]
     ]
   }
+
 }
