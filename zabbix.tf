@@ -78,7 +78,7 @@ resource "vsphere_virtual_machine" "zabbix" {
   }
   provisioner "local-exec" {
     working_dir = "ansible"
-    command     = "sleep 120; ansible-playbook zabbix-setup.yml --extra-vars  zabbixpasswordsql=${data.vault_generic_secret.netlablogin.data["zabbixsql"]} rootpassword=${data.vault_generic_secret.netlablogin.data["rootsql"]} "
+    command     = "sleep 120; ansible-playbook zabbix-setup.yml --extra-vars  zabbixpasswordsql=${data.vault_generic_secret.netlablogin.data["zabbixsql"]},rootpassword=${data.vault_generic_secret.netlablogin.data["rootsql"]}"
   }
 
 }
