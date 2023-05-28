@@ -1,3 +1,11 @@
+  - name: Read the latest version of a kv2 secret from Vault
+    community.hashi_vault.vault_read:
+      url: https://vault.nasdenissen.synology.me
+      path: kv-woningbouw/data/domain-creds
+      auth_method: token
+      token:
+    register: secret
+    delegate_to: "127.0.0.1"
 
 # installs active directory on the server
   - name: Install Active Directory Domain Services
@@ -16,8 +24,8 @@
     ansible.windows.win_domain_controller:
       dns_domain_name: woningbouw.local
       domain_admin_user: woningbouw\administrator
-      domain_admin_password: yLP4puAq
-      safe_mode_password: P@ssword01!!!
+      domain_admin_password: "{{ secret.data.data.data.local_admin }}"
+      safe_mode_password: "{{ secret.data.data.data.dc_safe_mode_password }}"
       state: domain_controller
     register: dc_promotion
 # Reboot 

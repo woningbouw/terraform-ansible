@@ -56,10 +56,18 @@ resource "vsphere_virtual_machine" "dc1" {
       }
     
   }
+
+  provisioner "local-exec" {
+    working_dir = "ansible"
+    command = "sleep 120; ansible-playbook secretstore.yml "
+  }
+  
   provisioner "local-exec" {
     working_dir = "ansible"
     command = "sleep 120; ansible-playbook woningbouw_dc.yml "
   }
+
+
 
   # provisioner "local-exec" {
   #   working_dir = "ansible"

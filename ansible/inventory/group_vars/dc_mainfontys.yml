@@ -1,5 +1,5 @@
 ansible_user: Administrator 
-ansible_password: Pinewood1234!
+ansible_password: dcwinadmin_placeholderpass
 ansible_port: 5986
 ansible_connection: winrm
 ansible_winrm_server_cert_validation: ignore

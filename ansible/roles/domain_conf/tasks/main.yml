@@ -1,3 +1,12 @@
+- name: Read the latest version of a kv2 secret from Vault
+  community.hashi_vault.vault_read:
+    url: https://vault.nasdenissen.synology.me
+    path: kv-woningbouw/data/domain-creds
+    auth_method: token
+    token:
+  register: secret
+  delegate_to: "127.0.0.1"
+
 - name: Create woningbouw OU
   win_dsc:
     resource_name: ADOrganizationalUnit
@@ -31,7 +40,7 @@
     groups:
         - Domain Admins
         - Super_Admins
-    password: "Pinewood1234!"
+    password: "{{ secret.data.data.data.dc_win_adminpass }}"
     update_password: on_create
     password_expired: false
     firstname: woningbouw
